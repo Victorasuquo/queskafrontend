@@ -3,6 +3,7 @@ import { Menu, X, Building2 } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import queskaLogo from "@/assets/queska-logo.png";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
 
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -44,6 +45,7 @@ const Navigation = () => {
 
           {/* CTA Buttons */}
           <div className="hidden md:flex items-center gap-3">
+            <ThemeToggle />
             <Button variant="outline" size="default" asChild className="border-vendor text-vendor hover:bg-vendor hover:text-vendor-foreground">
               <Link to="/vendor">
                 <Building2 className="w-4 h-4 mr-2" />
@@ -85,6 +87,10 @@ const Navigation = () => {
               </Link>
             ))}
             <div className="flex flex-col gap-2 pt-4 border-t border-border">
+              <div className="flex items-center justify-between py-2">
+                <span className="text-sm text-muted-foreground">Theme</span>
+                <ThemeToggle />
+              </div>
               <Button variant="ghost" size="default" className="w-full" asChild>
                 <Link to="/login">Log in</Link>
               </Button>

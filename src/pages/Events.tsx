@@ -40,6 +40,8 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import { useLoadingState } from "@/hooks/useLoading";
+import { EventCardSkeleton } from "@/components/skeletons";
 
 // Import images
 import calabarCarnival from "@/assets/event-calabar-carnival.jpg";
@@ -62,6 +64,9 @@ const Events = () => {
     const [savedEvents, setSavedEvents] = useState<number[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const eventsPerPage = 8;
+
+    // Loading state - simulates API loading
+    const { isLoading } = useLoadingState(true, 1200);
 
     const allEvents = [
         {
@@ -470,7 +475,13 @@ const Events = () => {
             {/* Events Grid/List */}
             <section className="py-12">
                 <div className="container px-4">
-                    {filteredEvents.length === 0 ? (
+                    {isLoading ? (
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            {Array.from({ length: 8 }).map((_, i) => (
+                                <EventCardSkeleton key={i} />
+                            ))}
+                        </div>
+                    ) : filteredEvents.length === 0 ? (
                         <div className="text-center py-20">
                             <Calendar className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                             <h3 className="text-xl font-semibold mb-2">No events found</h3>

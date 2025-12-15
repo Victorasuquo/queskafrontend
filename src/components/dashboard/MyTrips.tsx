@@ -14,6 +14,8 @@ import {
   Camera,
   MoreVertical,
 } from "lucide-react";
+import { useLoadingState } from "@/hooks/useLoading";
+import { TripListSkeleton, PageHeaderSkeleton, TabsSkeleton } from "@/components/skeletons";
 
 const trips = {
   upcoming: [
@@ -90,6 +92,18 @@ const getActivityIcon = (type: string) => {
 };
 
 const MyTrips = () => {
+  const { isLoading } = useLoadingState(true, 1000);
+
+  if (isLoading) {
+    return (
+      <div className="space-y-8">
+        <PageHeaderSkeleton />
+        <TabsSkeleton tabs={2} />
+        <TripListSkeleton count={2} />
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8">
       <div className="flex items-center justify-between">

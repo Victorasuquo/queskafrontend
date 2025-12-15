@@ -12,6 +12,9 @@ import {
   ArrowRight,
 } from "lucide-react";
 import type { DashboardView } from "@/pages/Dashboard";
+import { useLoadingState } from "@/hooks/useLoading";
+import { DashboardStatsSkeleton, TripListSkeleton, NotificationListSkeleton } from "@/components/skeletons";
+import { Skeleton } from "@/components/ui/skeleton";
 
 interface DashboardOverviewProps {
   onNavigate: (view: DashboardView) => void;
@@ -49,6 +52,38 @@ const recentActivity = [
 ];
 
 const DashboardOverview = ({ onNavigate }: DashboardOverviewProps) => {
+  const { isLoading } = useLoadingState(true, 1000);
+
+  if (isLoading) {
+    return (
+      <div className="space-y-8">
+        <div>
+          <Skeleton className="h-9 w-64 mb-2" />
+          <Skeleton className="h-5 w-80" />
+        </div>
+        <DashboardStatsSkeleton />
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          <Card className="lg:col-span-2">
+            <CardHeader>
+              <Skeleton className="h-6 w-32" />
+            </CardHeader>
+            <CardContent>
+              <TripListSkeleton count={2} />
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <Skeleton className="h-6 w-32" />
+            </CardHeader>
+            <CardContent>
+              <NotificationListSkeleton count={4} />
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="space-y-8">
       {/* Header */}

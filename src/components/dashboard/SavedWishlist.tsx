@@ -13,6 +13,8 @@ import {
   Trash2,
   ExternalLink,
 } from "lucide-react";
+import { useLoadingState } from "@/hooks/useLoading";
+import { WishlistSkeleton, PageHeaderSkeleton, TabsSkeleton } from "@/components/skeletons";
 
 const savedItems = {
   destinations: [
@@ -109,6 +111,17 @@ const savedItems = {
 
 const SavedWishlist = () => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
+  const { isLoading } = useLoadingState(true, 1000);
+
+  if (isLoading) {
+    return (
+      <div className="space-y-8">
+        <PageHeaderSkeleton />
+        <TabsSkeleton tabs={4} />
+        <WishlistSkeleton count={4} />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-8">

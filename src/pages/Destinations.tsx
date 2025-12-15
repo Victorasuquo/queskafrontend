@@ -45,6 +45,8 @@ import {
 } from "lucide-react";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
+import { useLoadingState } from "@/hooks/useLoading";
+import { DestinationCardSkeleton } from "@/components/skeletons";
 
 // Import images
 import ibenoBeach from "@/assets/destination-ibeno-beach.jpg";
@@ -67,6 +69,9 @@ const Destinations = () => {
     const [savedDestinations, setSavedDestinations] = useState<number[]>([]);
     const [currentPage, setCurrentPage] = useState(1);
     const destinationsPerPage = 8;
+
+    // Loading state - simulates API loading
+    const { isLoading } = useLoadingState(true, 1200);
 
     const allDestinations = [
         {
@@ -571,7 +576,13 @@ const Destinations = () => {
             {/* Destinations Grid/List */}
             <section className="py-12">
                 <div className="container px-4">
-                    {filteredDestinations.length === 0 ? (
+                    {isLoading ? (
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                            {Array.from({ length: 8 }).map((_, i) => (
+                                <DestinationCardSkeleton key={i} />
+                            ))}
+                        </div>
+                    ) : filteredDestinations.length === 0 ? (
                         <div className="text-center py-20">
                             <MapPin className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
                             <h3 className="text-xl font-semibold mb-2">No destinations found</h3>

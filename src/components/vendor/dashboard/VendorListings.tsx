@@ -3,12 +3,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useVendor } from '@/contexts/VendorContext';
-import { 
-  Plus, 
-  Search, 
-  Building2, 
-  Utensils, 
-  MapPin, 
+import {
+  Plus,
+  Search,
+  Building2,
+  Utensils,
+  MapPin,
   Calendar,
   Star,
   Eye,
@@ -23,6 +23,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ListingType } from '@/lib/vendorData';
+import { useLoadingState } from '@/hooks/useLoading';
+import { VendorListingsGridSkeleton, SearchBarSkeleton } from '@/components/skeletons';
 
 interface VendorListingsProps {
   onAddNew: () => void;
@@ -55,6 +57,27 @@ const VendorListings = ({ onAddNew }: VendorListingsProps) => {
     { value: 'activity', label: 'Activities' },
     { value: 'restaurant', label: 'Restaurants' },
   ];
+
+  const { isLoading } = useLoadingState(true, 1000);
+
+  if (isLoading) {
+    return (
+      <div className="space-y-6">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+          <div>
+            <h1 className="text-2xl font-bold text-foreground">My Listings</h1>
+            <p className="text-muted-foreground">Manage all your listings in one place</p>
+          </div>
+        </div>
+        <Card>
+          <CardContent className="p-4">
+            <SearchBarSkeleton />
+          </CardContent>
+        </Card>
+        <VendorListingsGridSkeleton count={4} />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -109,7 +132,7 @@ const VendorListings = ({ onAddNew }: VendorListingsProps) => {
             </div>
             <h3 className="text-lg font-semibold text-foreground mb-2">No listings found</h3>
             <p className="text-muted-foreground mb-4">
-              {searchQuery || filterType !== 'all' 
+              {searchQuery || filterType !== 'all'
                 ? 'Try adjusting your search or filters'
                 : 'Create your first listing to get started'}
             </p>
@@ -128,8 +151,8 @@ const VendorListings = ({ onAddNew }: VendorListingsProps) => {
                 {/* Image */}
                 <div className="relative h-40 bg-muted">
                   {listing.images[0] ? (
-                    <img 
-                      src={listing.images[0]} 
+                    <img
+                      src={listing.images[0]}
                       alt={listing.name}
                       className="w-full h-full object-cover"
                     />
@@ -138,13 +161,12 @@ const VendorListings = ({ onAddNew }: VendorListingsProps) => {
                       <Icon className="w-12 h-12 text-muted-foreground" />
                     </div>
                   )}
-                  <div className={`absolute top-3 left-3 px-2 py-1 rounded text-xs font-medium ${
-                    listing.status === 'verified' 
-                      ? 'bg-green-500 text-white' 
+                  <div className={`absolute top-3 left-3 px-2 py-1 rounded text-xs font-medium ${listing.status === 'verified'
+                      ? 'bg-green-500 text-white'
                       : listing.status === 'pending'
-                      ? 'bg-amber-500 text-white'
-                      : 'bg-red-500 text-white'
-                  }`}>
+                        ? 'bg-amber-500 text-white'
+                        : 'bg-red-500 text-white'
+                    }`}>
                     {listing.status}
                   </div>
                   <div className="absolute top-3 right-3">
@@ -163,7 +185,7 @@ const VendorListings = ({ onAddNew }: VendorListingsProps) => {
                           <Eye className="w-4 h-4 mr-2" />
                           Preview
                         </DropdownMenuItem>
-                        <DropdownMenuItem 
+                        <DropdownMenuItem
                           className="text-destructive"
                           onClick={() => deleteListing(listing.id)}
                         >
