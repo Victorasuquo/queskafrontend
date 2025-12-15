@@ -1,7 +1,8 @@
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Building2, Calendar, Utensils, MapPin, TrendingUp, Users, Shield, Globe, ArrowRight, CheckCircle, Sparkles } from 'lucide-react';
+import { Building2, Calendar, Utensils, MapPin, TrendingUp, Users, Shield, Globe, ArrowRight, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import queskaLogo from '@/assets/queska-logo.png';
 
 interface VendorLandingProps {
   onGetStarted: () => void;
@@ -52,10 +53,7 @@ const VendorLanding = ({ onGetStarted }: VendorLandingProps) => {
         <div className="container px-4">
           <div className="flex items-center justify-between h-16">
             <Link to="/" className="flex items-center gap-2">
-              <div className="w-7 h-7 rounded bg-vendor flex items-center justify-center">
-                <Sparkles className="w-4 h-4 text-vendor-foreground" />
-              </div>
-              <span className="text-xl font-bold text-foreground">Queska</span>
+              <img src={queskaLogo} alt="Queska" className="h-8 w-auto" />
               <span className="text-xs font-medium text-vendor bg-vendor-muted px-2 py-0.5 rounded">Vendor</span>
             </Link>
             <div className="flex items-center gap-3">

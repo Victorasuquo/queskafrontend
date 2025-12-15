@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Camera, Utensils, Waves, Mountain, Music, Heart } from "lucide-react";
+import { Link } from "react-router-dom";
 import activitiesImage from "@/assets/activities-experiences.jpg";
 
 const activities = [
@@ -19,8 +20,8 @@ const ActivitiesExperiences = () => {
           {/* Left Image */}
           <div className="relative animate-fade-in-up order-2 lg:order-1">
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                src={activitiesImage} 
+              <img
+                src={activitiesImage}
                 alt="Various travel activities and experiences"
                 className="w-full h-[600px] object-cover"
               />
@@ -43,11 +44,11 @@ const ActivitiesExperiences = () => {
               <Camera className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-primary">Curated Experiences</span>
             </div>
-            
+
             <h2 className="text-5xl md:text-6xl font-bold text-foreground leading-tight">
               What do you want to do?
             </h2>
-            
+
             <p className="text-xl text-muted-foreground">
               Choose from hundreds of activities tailored to your interests. Whether you seek adventure, relaxation, or cultural immersion, we've got you covered.
             </p>
@@ -68,13 +69,17 @@ const ActivitiesExperiences = () => {
             </div>
 
             <div className="flex gap-4">
-              <Button size="lg" className="group">
-                Explore Activities
-                <Camera className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform" />
-              </Button>
-              <Button variant="outline" size="lg">
-                View All
-              </Button>
+              <Link to="/activities">
+                <Button size="lg" className="group">
+                  Explore Activities
+                  <Camera className="w-4 h-4 ml-2 group-hover:scale-110 transition-transform" />
+                </Button>
+              </Link>
+              <Link to="/activities">
+                <Button variant="outline" size="lg">
+                  View All
+                </Button>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
-import { MapPin, Search, Calendar as CalendarIcon, Users, Minus, Plus } from "lucide-react";
+import { MapPin, Search, Calendar as CalendarIcon, Users, Minus, Plus, ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import destinationImage from "@/assets/destination-planning.jpg";
 import { useState } from "react";
 import { Calendar } from "@/components/ui/calendar";
@@ -16,9 +17,9 @@ const DestinationSelector = () => {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    const dateDisplay = dateRange?.from 
-      ? dateRange.to 
+
+    const dateDisplay = dateRange?.from
+      ? dateRange.to
         ? `${format(dateRange.from, "PP")} - ${format(dateRange.to, "PP")}`
         : format(dateRange.from, "PP")
       : "Any date";
@@ -50,11 +51,11 @@ const DestinationSelector = () => {
               <MapPin className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-primary">Plan Your Journey</span>
             </div>
-            
+
             <h2 className="text-5xl md:text-6xl font-bold text-foreground leading-tight">
               Where are you traveling to?
             </h2>
-            
+
             <p className="text-xl text-muted-foreground">
               Discover hidden gems and popular destinations across Akwa Ibom State. From pristine beaches to cultural landmarks, find your perfect escape.
             </p>
@@ -63,9 +64,9 @@ const DestinationSelector = () => {
             <form onSubmit={handleSearch} className="bg-card p-6 rounded-2xl shadow-lg space-y-4 border border-border">
               <div className="flex items-center gap-3 p-4 bg-muted/50 rounded-lg">
                 <Search className="w-5 h-5 text-muted-foreground" />
-                <input 
-                  type="text" 
-                  placeholder="Search destinations..." 
+                <input
+                  type="text"
+                  placeholder="Search destinations..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="flex-1 bg-transparent border-none outline-none text-foreground placeholder:text-muted-foreground"
@@ -175,20 +176,28 @@ const DestinationSelector = () => {
                   </button>
                 ))}
               </div>
+              <div className="pt-4">
+                <Button variant="outline" asChild>
+                  <Link to="/destinations">
+                    View All Destinations
+                    <ArrowRight className="w-4 h-4 ml-2" />
+                  </Link>
+                </Button>
+              </div>
             </div>
           </div>
 
           {/* Right Image */}
           <div className="relative animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
             <div className="relative rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                src={destinationImage} 
+              <img
+                src={destinationImage}
                 alt="Travel destination planning interface"
                 className="w-full h-[600px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-secondary/60 to-transparent" />
             </div>
-            
+
             {/* Floating Stats */}
             <div className="absolute -bottom-6 -left-6 bg-card p-6 rounded-xl shadow-xl border border-border">
               <div className="text-4xl font-bold text-primary">150+</div>

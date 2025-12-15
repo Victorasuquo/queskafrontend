@@ -4,8 +4,9 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Sparkles, ArrowLeft, Building2, Mail, Lock, Phone, User } from 'lucide-react';
+import { ArrowLeft, Building2, Mail, Lock, Phone, User } from 'lucide-react';
 import { useVendor } from '@/contexts/VendorContext';
+import queskaLogo from '@/assets/queska-logo.png';
 import { useToast } from '@/hooks/use-toast';
 import { Link } from 'react-router-dom';
 
@@ -16,7 +17,7 @@ interface VendorAuthProps {
 const VendorAuth = ({ onBack }: VendorAuthProps) => {
   const { login, register } = useVendor();
   const { toast } = useToast();
-  
+
   const [loginData, setLoginData] = useState({ email: '', password: '' });
   const [registerData, setRegisterData] = useState({
     businessName: '',
@@ -63,10 +64,7 @@ const VendorAuth = ({ onBack }: VendorAuthProps) => {
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <Link to="/" className="inline-flex items-center gap-2 mb-6">
-            <div className="w-8 h-8 rounded bg-vendor flex items-center justify-center">
-              <Sparkles className="w-5 h-5 text-vendor-foreground" />
-            </div>
-            <span className="text-2xl font-bold text-foreground">Queska</span>
+            <img src={queskaLogo} alt="Queska" className="h-10 w-auto" />
             <span className="text-xs font-medium text-vendor bg-vendor-muted px-2 py-0.5 rounded">Vendor</span>
           </Link>
         </div>
@@ -82,7 +80,7 @@ const VendorAuth = ({ onBack }: VendorAuthProps) => {
                 <TabsTrigger value="login">Login</TabsTrigger>
                 <TabsTrigger value="register">Register</TabsTrigger>
               </TabsList>
-              
+
               <TabsContent value="login">
                 <form onSubmit={handleLogin} className="space-y-4">
                   <div className="space-y-2">
@@ -120,7 +118,7 @@ const VendorAuth = ({ onBack }: VendorAuthProps) => {
                   </Button>
                 </form>
               </TabsContent>
-              
+
               <TabsContent value="register">
                 <form onSubmit={handleRegister} className="space-y-4">
                   <div className="space-y-2">

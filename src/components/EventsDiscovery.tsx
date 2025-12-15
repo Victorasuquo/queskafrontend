@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Calendar, MapPin, Users, ArrowRight, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 import eventsImage from "@/assets/events-festivals.jpg";
 import calabarCarnival from "@/assets/event-calabar-carnival.jpg";
 import culturalFestival from "@/assets/event-cultural-festival.jpg";
@@ -46,8 +47,8 @@ const EventsDiscovery = () => {
     <section className="min-h-screen flex items-center bg-secondary relative overflow-hidden">
       {/* Background Image with Overlay */}
       <div className="absolute inset-0">
-        <img 
-          src={eventsImage} 
+        <img
+          src={eventsImage}
           alt="Cultural festival with traditional dancers"
           className="w-full h-full object-cover opacity-20"
         />
@@ -62,11 +63,11 @@ const EventsDiscovery = () => {
               <Sparkles className="w-4 h-4 text-primary" />
               <span className="text-sm font-medium text-primary-foreground">Live Events</span>
             </div>
-            
+
             <h2 className="text-5xl md:text-7xl font-bold text-secondary-foreground leading-tight">
               Discover Events & Experiences
             </h2>
-            
+
             <p className="text-xl text-secondary-foreground/80 max-w-2xl mx-auto">
               From vibrant festivals to intimate cultural gatherings, find events that make your trip unforgettable.
             </p>
@@ -82,8 +83,8 @@ const EventsDiscovery = () => {
               >
                 {/* Event Image */}
                 <div className="relative h-48 overflow-hidden">
-                  <img 
-                    src={event.image} 
+                  <img
+                    src={event.image}
                     alt={event.title}
                     className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                   />
@@ -99,7 +100,7 @@ const EventsDiscovery = () => {
                   <h3 className="text-xl font-bold text-secondary-foreground mb-4 group-hover:text-primary transition-colors">
                     {event.title}
                   </h3>
-                  
+
                   <div className="space-y-2 mb-6">
                     <div className="flex items-center gap-2 text-secondary-foreground/70">
                       <Calendar className="w-4 h-4" />
@@ -115,8 +116,8 @@ const EventsDiscovery = () => {
                     </div>
                   </div>
 
-                  <Button 
-                    variant="outline" 
+                  <Button
+                    variant="outline"
                     className="w-full group-hover:bg-primary group-hover:text-primary-foreground group-hover:border-primary"
                   >
                     Learn More
@@ -129,9 +130,11 @@ const EventsDiscovery = () => {
 
           {/* CTA */}
           <div className="text-center animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
-            <Button size="lg" className="bg-primary hover:bg-primary/90">
-              View All Events
-              <Calendar className="w-4 h-4 ml-2" />
+            <Button size="lg" className="bg-primary hover:bg-primary/90" asChild>
+              <Link to="/events">
+                View All Events
+                <Calendar className="w-4 h-4 ml-2" />
+              </Link>
             </Button>
           </div>
         </div>

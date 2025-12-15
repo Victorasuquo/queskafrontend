@@ -1,17 +1,17 @@
 import { Button } from '@/components/ui/button';
 import { useVendor } from '@/contexts/VendorContext';
-import { 
-  LayoutDashboard, 
-  List, 
-  Plus, 
-  Calendar, 
-  BarChart3, 
-  Settings, 
-  LogOut, 
-  Sparkles,
+import {
+  LayoutDashboard,
+  List,
+  Plus,
+  Calendar,
+  BarChart3,
+  Settings,
+  LogOut,
   Building2
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import queskaLogo from '@/assets/queska-logo.png';
 import { VendorView } from './VendorDashboard';
 
 interface VendorSidebarProps {
@@ -36,10 +36,7 @@ const VendorSidebar = ({ currentView, onNavigate }: VendorSidebarProps) => {
       {/* Logo */}
       <div className="p-4 border-b border-border">
         <Link to="/" className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded bg-vendor flex items-center justify-center">
-            <Sparkles className="w-5 h-5 text-vendor-foreground" />
-          </div>
-          <span className="text-xl font-bold text-foreground">Queska</span>
+          <img src={queskaLogo} alt="Queska" className="h-8 w-auto" />
         </Link>
         <div className="mt-2 flex items-center gap-2 text-sm text-vendor">
           <Building2 className="w-4 h-4" />
@@ -74,11 +71,10 @@ const VendorSidebar = ({ currentView, onNavigate }: VendorSidebarProps) => {
           <button
             key={item.id}
             onClick={() => onNavigate(item.id)}
-            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
-              currentView === item.id
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${currentView === item.id
                 ? 'bg-vendor text-vendor-foreground'
                 : 'text-muted-foreground hover:bg-muted hover:text-foreground'
-            }`}
+              }`}
           >
             <item.icon className="w-5 h-5" />
             {item.label}
@@ -88,8 +84,8 @@ const VendorSidebar = ({ currentView, onNavigate }: VendorSidebarProps) => {
 
       {/* Logout */}
       <div className="p-4 border-t border-border">
-        <Button 
-          variant="ghost" 
+        <Button
+          variant="ghost"
           className="w-full justify-start text-muted-foreground hover:text-destructive"
           onClick={logout}
         >
