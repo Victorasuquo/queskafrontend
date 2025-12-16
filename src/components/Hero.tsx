@@ -85,7 +85,7 @@ const Hero = () => {
 
           {/* Subheading */}
           <p className="text-lg md:text-xl text-secondary-foreground/80 max-w-xl animate-fade-in-up" style={{ animationDelay: "0.2s" }}>
-            AI-powered travel companion with personalized recommendations, real-time updates, and 24/7 support.
+            Queska is the all-in-one travel experience platform that curates, personalizes, and books your entire journey seamlessly.
           </p>
 
           {/* CTA Button */}

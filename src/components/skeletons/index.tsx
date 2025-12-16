@@ -83,6 +83,48 @@ export function ActivityCardSkeleton() {
     );
 }
 
+export function StayCardSkeleton() {
+    return (
+        <Card className="overflow-hidden">
+            <Skeleton className="aspect-[4/3] w-full rounded-none" />
+            <CardContent className="p-4 space-y-3">
+                <div className="flex items-center gap-1">
+                    <Skeleton className="h-3 w-3 rounded-full" />
+                    <Skeleton className="h-4 w-32" />
+                </div>
+                <Skeleton className="h-6 w-3/4" />
+                <div className="flex items-center gap-3">
+                    <div className="flex items-center gap-1">
+                        <Skeleton className="h-4 w-4" />
+                        <Skeleton className="h-4 w-12" />
+                    </div>
+                    <div className="flex items-center gap-1">
+                        <Skeleton className="h-4 w-4" />
+                        <Skeleton className="h-4 w-12" />
+                    </div>
+                    <div className="flex items-center gap-1">
+                        <Skeleton className="h-4 w-4" />
+                        <Skeleton className="h-4 w-6" />
+                    </div>
+                </div>
+                <div className="flex items-center gap-2">
+                    {Array.from({ length: 4 }).map((_, i) => (
+                        <Skeleton key={i} className="h-7 w-7 rounded-full" />
+                    ))}
+                </div>
+                <div className="flex items-center justify-between pt-3 border-t">
+                    <div className="flex items-center gap-1">
+                        <Skeleton className="h-4 w-4" />
+                        <Skeleton className="h-4 w-8" />
+                        <Skeleton className="h-4 w-12" />
+                    </div>
+                    <Skeleton className="h-5 w-24" />
+                </div>
+            </CardContent>
+        </Card>
+    );
+}
+
 // ============================================
 // Grid Skeletons
 // ============================================
@@ -112,6 +154,16 @@ export function ActivityGridSkeleton({ count = 6 }: { count?: number }) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {Array.from({ length: count }).map((_, i) => (
                 <ActivityCardSkeleton key={i} />
+            ))}
+        </div>
+    );
+}
+
+export function StayGridSkeleton({ count = 6 }: { count?: number }) {
+    return (
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+            {Array.from({ length: count }).map((_, i) => (
+                <StayCardSkeleton key={i} />
             ))}
         </div>
     );
@@ -761,6 +813,85 @@ export function ActivitiesPageSkeleton() {
                 <div className="flex-1">
                     <ActivityGridSkeleton count={9} />
                     <PaginationSkeleton />
+                </div>
+            </div>
+        </div>
+    );
+}
+
+export function StaysPageSkeleton() {
+    return (
+        <div className="min-h-screen bg-background">
+            {/* Hero Section */}
+            <div className="relative pt-24 pb-12 bg-gradient-to-br from-primary/10 via-background to-secondary/10">
+                <div className="container mx-auto px-4">
+                    <div className="text-center mb-8">
+                        <Skeleton className="h-12 w-96 mx-auto mb-4" />
+                        <Skeleton className="h-6 w-[28rem] mx-auto" />
+                    </div>
+                    <Card className="max-w-5xl mx-auto">
+                        <CardContent className="p-6">
+                            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4">
+                                <div>
+                                    <Skeleton className="h-4 w-16 mb-2" />
+                                    <Skeleton className="h-10 w-full" />
+                                </div>
+                                <div>
+                                    <Skeleton className="h-4 w-16 mb-2" />
+                                    <Skeleton className="h-10 w-full" />
+                                </div>
+                                <div>
+                                    <Skeleton className="h-4 w-16 mb-2" />
+                                    <Skeleton className="h-10 w-full" />
+                                </div>
+                                <div>
+                                    <Skeleton className="h-4 w-24 mb-2" />
+                                    <div className="flex gap-2">
+                                        <Skeleton className="h-10 flex-1" />
+                                        <Skeleton className="h-10 w-24" />
+                                    </div>
+                                </div>
+                                <div className="flex items-end">
+                                    <Skeleton className="h-10 w-full" />
+                                </div>
+                            </div>
+                        </CardContent>
+                    </Card>
+                </div>
+            </div>
+
+            {/* Property Types */}
+            <div className="py-8 border-b">
+                <div className="container mx-auto px-4">
+                    <div className="flex items-center gap-6 overflow-x-auto pb-2">
+                        {Array.from({ length: 8 }).map((_, i) => (
+                            <div key={i} className="flex flex-col items-center gap-2 min-w-[80px] py-3 px-4">
+                                <Skeleton className="h-6 w-6" />
+                                <Skeleton className="h-3 w-16" />
+                            </div>
+                        ))}
+                    </div>
+                </div>
+            </div>
+
+            {/* Main Content */}
+            <div className="py-8">
+                <div className="container mx-auto px-4">
+                    <div className="flex flex-col lg:flex-row gap-8">
+                        <div className="hidden lg:block w-72 flex-shrink-0">
+                            <FilterSidebarSkeleton />
+                        </div>
+                        <div className="flex-1">
+                            <div className="flex items-center justify-between mb-6">
+                                <div>
+                                    <Skeleton className="h-6 w-32 mb-2" />
+                                    <Skeleton className="h-4 w-48" />
+                                </div>
+                                <Skeleton className="h-10 w-44" />
+                            </div>
+                            <StayGridSkeleton count={9} />
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

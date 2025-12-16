@@ -17,6 +17,9 @@ import About from "./pages/About";
 import Events from "./pages/Events";
 import Destinations from "./pages/Destinations";
 import Activities from "./pages/Activities";
+import Flights from "./pages/Flights";
+import Restaurants from "./pages/Restaurants";
+import Stays from "./pages/Stays";
 import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
@@ -52,6 +55,9 @@ const App = () => (
                 <Route path="/events" element={<Events />} />
                 <Route path="/destinations" element={<Destinations />} />
                 <Route path="/activities" element={<Activities />} />
+                <Route path="/flights" element={<Flights />} />
+                <Route path="/restaurants" element={<Restaurants />} />
+                <Route path="/stays" element={<Stays />} />
                 <Route path="/admin" element={<AdminLogin />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

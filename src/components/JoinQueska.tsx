@@ -110,8 +110,8 @@ const JoinQueska = () => {
         <div className="mt-12 text-center">
           <p className="text-muted-foreground">
             Questions? Reach out to our partnerships team at{" "}
-            <a href="mailto:partners@queska.com" className="text-primary hover:underline">
-              partners@queska.com
+            <a href="mailto:hello@queska.com" className="text-primary hover:underline">
+              hello@queska.com
             </a>
           </p>
         </div>

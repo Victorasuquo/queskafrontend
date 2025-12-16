@@ -41,6 +41,21 @@ const Footer = () => {
             <h3 className="font-semibold text-secondary-foreground">Explore</h3>
             <ul className="space-y-3 text-sm">
               <li>
+                <Link to="/flights" className="text-secondary-foreground/70 hover:text-primary transition-colors">
+                  Flights
+                </Link>
+              </li>
+              <li>
+                <Link to="/stays" className="text-secondary-foreground/70 hover:text-primary transition-colors">
+                  Stays
+                </Link>
+              </li>
+              <li>
+                <Link to="/restaurants" className="text-secondary-foreground/70 hover:text-primary transition-colors">
+                  Restaurants
+                </Link>
+              </li>
+              <li>
                 <Link to="/destinations" className="text-secondary-foreground/70 hover:text-primary transition-colors">
                   Destinations
                 </Link>

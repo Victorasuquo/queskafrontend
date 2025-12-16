@@ -2,6 +2,7 @@ import { Star, Quote } from "lucide-react";
 import { Card } from "@/components/ui/card";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import ataimaPhoto from "@/assets/testimonial-ataima.jpg";
+import victoriaPhoto from "@/assets/testimonial_victoria_uyo.png";
 
 const testimonials = [
   {
@@ -13,19 +14,19 @@ const testimonials = [
     text: "I like the travel concept that Queska is introducing, it is unique, more like having a friend travel with you on an adventure, a friend who knows what you like.",
   },
   {
+    name: "Victoria Enoh Uyoh",
+    location: "Uyo, Akwa Ibom",
+    avatar: "VU",
+    avatarUrl: victoriaPhoto,
+    rating: 5,
+    text: "I used queska to navigate my travel from Cross river State to Christmas Village in Akwa Ibom State. It was a wonderful experience I had as everything was well planned and catered for. Thank you queska for helping me experience tourism without stress. 👍🏻",
+  },
+  {
     name: "Chukwudi Okafor",
     location: "Abuja, Nigeria",
     avatar: "CO",
     rating: 5,
     text: "The smart itinerary feature saved me so much time. Everything was perfectly organized, from beach visits to cultural festivals. Absolutely brilliant!",
-  },
-  {
-    name: "Emily Martinez",
-    location: "New York, USA",
-    avatar: "EM",
-    avatarUrl: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop",
-    rating: 5,
-    text: "As a solo traveler, the 24/7 support feature gave me peace of mind. The accessibility features made navigating new destinations incredibly easy for me.",
   },
   {
     name: "Michael Adeyemi",

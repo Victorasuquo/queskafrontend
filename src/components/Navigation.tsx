@@ -10,9 +10,11 @@ const Navigation = () => {
   const location = useLocation();
 
   const navItems = [
+    { label: "Flights", href: "/flights" },
+    { label: "Stays", href: "/stays" },
+    { label: "Restaurants", href: "/restaurants" },
     { label: "Features", href: "/features" },
     { label: "How It Works", href: "/how-it-works" },
-    { label: "Community", href: "/community" },
     { label: "About", href: "/about" },
   ];
 
