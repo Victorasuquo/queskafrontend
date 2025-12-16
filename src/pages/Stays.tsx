@@ -585,8 +585,8 @@ const Stays = () => {
                                     key={type.id}
                                     onClick={() => toggleType(type.id)}
                                     className={`flex flex-col items-center gap-2 min-w-[80px] py-3 px-4 rounded-xl transition-all ${isSelected
-                                            ? "bg-primary text-primary-foreground"
-                                            : "hover:bg-muted text-muted-foreground hover:text-foreground"
+                                        ? "bg-primary text-primary-foreground"
+                                        : "hover:bg-muted text-muted-foreground hover:text-foreground"
                                         }`}
                                 >
                                     <Icon className="w-6 h-6" />
@@ -768,8 +768,8 @@ const Stays = () => {
                                             >
                                                 <Heart
                                                     className={`w-5 h-5 ${favorites.includes(stay.id)
-                                                            ? "fill-red-500 text-red-500"
-                                                            : "text-gray-600 dark:text-gray-300"
+                                                        ? "fill-red-500 text-red-500"
+                                                        : "text-gray-600 dark:text-gray-300"
                                                         }`}
                                                 />
                                             </button>
@@ -913,9 +913,9 @@ const Stays = () => {
 
             {/* Stay Detail Modal */}
             <Dialog open={!!selectedStay} onOpenChange={() => setSelectedStay(null)}>
-                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+                <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto p-0">
                     {selectedStay && (
-                        <>
+                        <div className="p-6">
                             <DialogHeader>
                                 <div className="flex items-start justify-between">
                                     <div>
@@ -945,7 +945,7 @@ const Stays = () => {
                             </DialogHeader>
 
                             {/* Image */}
-                            <div className="relative aspect-video rounded-xl overflow-hidden my-4">
+                            <div className="relative w-full h-64 md:h-80 rounded-xl overflow-hidden my-4">
                                 <img
                                     src={selectedStay.image}
                                     alt={selectedStay.name}
@@ -1045,8 +1045,8 @@ const Stays = () => {
                                             >
                                                 <Heart
                                                     className={`w-4 h-4 mr-2 ${favorites.includes(selectedStay.id)
-                                                            ? "fill-red-500 text-red-500"
-                                                            : ""
+                                                        ? "fill-red-500 text-red-500"
+                                                        : ""
                                                         }`}
                                                 />
                                                 Save
@@ -1107,7 +1107,7 @@ const Stays = () => {
                                     View on Map
                                 </Button>
                             </div>
-                        </>
+                        </div>
                     )}
                 </DialogContent>
             </Dialog>

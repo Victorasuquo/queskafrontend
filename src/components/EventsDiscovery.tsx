@@ -25,11 +25,11 @@ const upcomingEvents = [
     image: culturalFestival
   },
   {
-    title: "Beach Music Festival",
-    date: "Feb 2025",
-    location: "Ibeno, Nigeria",
+    title: "Christmas Village" ,
+    date: "Dec 2025",
+    location: "Uyo, Nigeria",
     attendees: "3.1K",
-    category: "Music",
+    category: "Festival",
     image: beachMusic
   },
   {
