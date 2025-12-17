@@ -24,6 +24,7 @@ import AdminLogin from "./pages/AdminLogin";
 import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
+import GoogleCallback from "./pages/GoogleCallback";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -48,6 +49,7 @@ const App = () => (
               <Routes>
                 <Route path="/" element={<Index />} />
                 <Route path="/login" element={<Login />} />
+                <Route path="/auth/google/callback" element={<GoogleCallback />} />
                 <Route path="/dashboard" element={<Dashboard />} />
                 <Route path="/vendor" element={<VendorPortal />} />
                 <Route path="/features" element={<Features />} />

@@ -3,7 +3,7 @@
 
 import React, { createContext, useContext, useState, useEffect, useCallback, ReactNode } from 'react';
 import { authService, clearTokens } from '@/lib/api';
-import type { User, LoginCredentials, RegisterData, AuthResponse } from '@/types';
+import type { User, LoginCredentials, RegisterData, AuthResponse, RegisterResponse } from '@/types';
 
 interface AuthContextType {
     user: User | null;
@@ -11,10 +11,11 @@ interface AuthContextType {
     isLoading: boolean;
     error: string | null;
     login: (credentials: LoginCredentials) => Promise<AuthResponse>;
-    register: (data: RegisterData) => Promise<AuthResponse>;
+    register: (data: RegisterData) => Promise<RegisterResponse>;
     logout: () => Promise<void>;
     updateUser: (user: User) => void;
     clearError: () => void;
+    refreshUser: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -43,6 +44,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
                     try {
                         const currentUser = await authService.getCurrentUser();
                         setUser(currentUser);
+                        // Update stored user with fresh data
+                        localStorage.setItem('queska_user', JSON.stringify(currentUser));
                     } catch {
                         // Token is invalid, clear everything
                         clearTokens();
@@ -86,7 +89,8 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
             setUser(response.user);
             return response;
         } catch (err) {
-            const message = err instanceof Error ? err.message : 'Login failed';
+            const message = err instanceof Error ? err.message :
+                (err as { message?: string })?.message || 'Login failed';
             setError(message);
             throw err;
         } finally {
@@ -94,15 +98,17 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         }
     }, []);
 
-    const register = useCallback(async (data: RegisterData): Promise<AuthResponse> => {
+    const register = useCallback(async (data: RegisterData): Promise<RegisterResponse> => {
         setIsLoading(true);
         setError(null);
         try {
             const response = await authService.register(data);
-            setUser(response.user);
+            // Note: Registration doesn't log in the user automatically
+            // User needs to verify email first
             return response;
         } catch (err) {
-            const message = err instanceof Error ? err.message : 'Registration failed';
+            const message = err instanceof Error ? err.message :
+                (err as { message?: string })?.message || 'Registration failed';
             setError(message);
             throw err;
         } finally {
@@ -122,10 +128,25 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
 
     const updateUser = useCallback((updatedUser: User) => {
         setUser(updatedUser);
+        localStorage.setItem('queska_user', JSON.stringify(updatedUser));
     }, []);
 
     const clearError = useCallback(() => {
         setError(null);
+    }, []);
+
+    const refreshUser = useCallback(async () => {
+        if (!authService.isAuthenticated()) return;
+
+        try {
+            const currentUser = await authService.getCurrentUser();
+            setUser(currentUser);
+            localStorage.setItem('queska_user', JSON.stringify(currentUser));
+        } catch {
+            // Token might be invalid
+            clearTokens();
+            setUser(null);
+        }
     }, []);
 
     const value: AuthContextType = {
@@ -138,6 +159,7 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
         logout,
         updateUser,
         clearError,
+        refreshUser,
     };
 
     return (

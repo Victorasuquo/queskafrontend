@@ -131,10 +131,6 @@ export interface User {
     updated_at: string;
     last_login_at: string | null;
 }
-    marketing: boolean;
-    tripUpdates: boolean;
-    priceAlerts: boolean;
-}
 
 export interface UserActivity {
     id: string;
@@ -152,15 +148,34 @@ export interface UserActivity {
 export interface LoginCredentials {
     email: string;
     password: string;
-    rememberMe?: boolean;
 }
 
 export interface RegisterData {
     email: string;
     password: string;
-    firstName: string;
-    lastName: string;
+    first_name: string;
+    last_name: string;
     phone?: string;
+}
+
+export interface RegisterResponse {
+    success: boolean;
+    message: string;
+    user_id: string;
+    email: string;
+    referral_code: string;
+}
+
+export interface LoginResponse {
+    access_token: string;
+    refresh_token: string;
+    token_type: 'bearer';
+    expires_in: number;
+    user: User;
+}
+
+export interface GoogleAuthResponse extends LoginResponse {
+    is_new_user: boolean;
 }
 
 export interface AuthTokens {
@@ -182,6 +197,45 @@ export interface PasswordResetConfirm {
     token: string;
     password: string;
     confirmPassword: string;
+}
+
+// Dashboard Types
+export interface DashboardOverview {
+    profile: {
+        name: string;
+        email: string;
+        profile_photo: string | null;
+        profile_completion: number;
+        is_verified: boolean;
+        member_since: string;
+    };
+    quick_stats: {
+        experiences: number;
+        upcoming: number;
+        bookings: number;
+        reviews: number;
+        favorites: number;
+        followers: number;
+        following: number;
+    };
+    spending: {
+        total_spent: number;
+        total_saved: number;
+        currency: string;
+    };
+    travel_stats: {
+        countries_visited: number;
+        cities_visited: number;
+    };
+    subscription: {
+        plan: string;
+        is_active: boolean;
+        expires_at: string | null;
+    };
+    agent: {
+        has_agent: boolean;
+        agent_id: string | null;
+    };
 }
 
 // ============================================

@@ -7,10 +7,12 @@ import type {
     User,
     LoginCredentials,
     RegisterData,
+    LoginResponse,
+    RegisterResponse,
     AuthResponse,
-    AuthTokens,
     PasswordResetRequest,
     PasswordResetConfirm,
+    GoogleAuthResponse,
 } from '@/types';
 
 export const authService = {
@@ -18,38 +20,98 @@ export const authService = {
      * Login user with email and password
      */
     async login(credentials: LoginCredentials): Promise<AuthResponse> {
-        const response = await apiClient.post<AuthResponse>(
+        const response = await apiClient.post<LoginResponse>(
             API_ENDPOINTS.AUTH.LOGIN,
             credentials,
             { skipAuth: true }
         );
 
-        if (response.data.tokens) {
-            localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, response.data.tokens.accessToken);
-            localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, response.data.tokens.refreshToken);
-            localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.data.user));
-        }
+        const data = response.data;
 
-        return response.data;
+        // Store tokens and user
+        localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.access_token);
+        localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, data.refresh_token);
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(data.user));
+
+        // Return in standard format
+        return {
+            user: data.user,
+            tokens: {
+                accessToken: data.access_token,
+                refreshToken: data.refresh_token,
+                expiresIn: data.expires_in,
+            },
+        };
     },
 
     /**
      * Register new user
      */
-    async register(data: RegisterData): Promise<AuthResponse> {
-        const response = await apiClient.post<AuthResponse>(
+    async register(data: RegisterData): Promise<RegisterResponse> {
+        const response = await apiClient.post<RegisterResponse>(
             API_ENDPOINTS.AUTH.REGISTER,
             data,
             { skipAuth: true }
         );
 
-        if (response.data.tokens) {
-            localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, response.data.tokens.accessToken);
-            localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, response.data.tokens.refreshToken);
-            localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(response.data.user));
-        }
-
         return response.data;
+    },
+
+    /**
+     * Get Google OAuth URL for login
+     */
+    async getGoogleAuthUrl(): Promise<{ auth_url: string }> {
+        const response = await apiClient.get<{ auth_url: string }>(
+            API_ENDPOINTS.AUTH.GOOGLE_LOGIN,
+            { skipAuth: true }
+        );
+        // Handle both wrapped and unwrapped responses
+        // Backend may return { auth_url: "..." } or { data: { auth_url: "..." } }
+        const data = response.data || response;
+        if (!data.auth_url && (data as unknown as { authorization_url?: string }).authorization_url) {
+            // Backend might use authorization_url instead of auth_url
+            return { auth_url: (data as unknown as { authorization_url: string }).authorization_url };
+        }
+        return data as { auth_url: string };
+    },
+
+    /**
+     * Handle Google OAuth callback
+     */
+    async handleGoogleCallback(code: string): Promise<GoogleAuthResponse> {
+        const response = await apiClient.get<GoogleAuthResponse>(
+            `${API_ENDPOINTS.AUTH.GOOGLE_CALLBACK}?code=${code}`,
+            { skipAuth: true }
+        );
+
+        const data = response.data;
+
+        // Store tokens and user
+        localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.access_token);
+        localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, data.refresh_token);
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(data.user));
+
+        return data;
+    },
+
+    /**
+     * Authenticate with Google ID token (for client-side OAuth)
+     */
+    async loginWithGoogleToken(idToken: string): Promise<GoogleAuthResponse> {
+        const response = await apiClient.post<GoogleAuthResponse>(
+            API_ENDPOINTS.AUTH.GOOGLE_TOKEN,
+            { id_token: idToken },
+            { skipAuth: true }
+        );
+
+        const data = response.data;
+
+        // Store tokens and user
+        localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, data.access_token);
+        localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, data.refresh_token);
+        localStorage.setItem(STORAGE_KEYS.USER, JSON.stringify(data.user));
+
+        return data;
     },
 
     /**
@@ -76,18 +138,15 @@ export const authService = {
     /**
      * Refresh access token
      */
-    async refreshToken(refreshToken: string): Promise<AuthTokens> {
-        const response = await apiClient.post<AuthTokens>(
+    async refreshToken(refreshToken: string): Promise<{ access_token: string; token_type: string; expires_in: number }> {
+        const response = await apiClient.post<{ access_token: string; token_type: string; expires_in: number }>(
             API_ENDPOINTS.AUTH.REFRESH_TOKEN,
-            { refreshToken },
+            { refresh_token: refreshToken },
             { skipAuth: true }
         );
 
-        if (response.data.accessToken) {
-            localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, response.data.accessToken);
-            if (response.data.refreshToken) {
-                localStorage.setItem(STORAGE_KEYS.REFRESH_TOKEN, response.data.refreshToken);
-            }
+        if (response.data.access_token) {
+            localStorage.setItem(STORAGE_KEYS.ACCESS_TOKEN, response.data.access_token);
         }
 
         return response.data;
