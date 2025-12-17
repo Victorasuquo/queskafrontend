@@ -3,10 +3,10 @@
 
 export const API_CONFIG = {
     // Base URL - will be replaced with actual API URL from environment
-    BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:3001/api',
+    BASE_URL: import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000',
 
     // API Version
-    VERSION: 'v1',
+    VERSION: 'api/v1',
 
     // Timeout in milliseconds
     TIMEOUT: 30000,
@@ -22,21 +22,34 @@ export const API_CONFIG = {
 export const API_ENDPOINTS = {
     // Authentication
     AUTH: {
-        LOGIN: '/auth/login',
-        REGISTER: '/auth/register',
+        LOGIN: '/users/login',
+        REGISTER: '/users/register',
         LOGOUT: '/auth/logout',
         REFRESH_TOKEN: '/auth/refresh',
-        FORGOT_PASSWORD: '/auth/forgot-password',
-        RESET_PASSWORD: '/auth/reset-password',
-        VERIFY_EMAIL: '/auth/verify-email',
-        ME: '/auth/me',
+        FORGOT_PASSWORD: '/users/forgot-password',
+        RESET_PASSWORD: '/users/reset-password',
+        VERIFY_EMAIL: '/users/verify-email/confirm',
+        ME: '/users/me',
+        // Google OAuth
+        GOOGLE_LOGIN: '/auth/google/login',
+        GOOGLE_CALLBACK: '/auth/google/callback',
+        GOOGLE_TOKEN: '/auth/google/token',
+        OAUTH_STATUS: '/auth/oauth/status',
+    },
+
+    // Dashboard
+    DASHBOARD: {
+        USER: '/dashboards/user',
+        USER_OVERVIEW: '/dashboards/user/overview',
+        USER_STATS: '/dashboards/user/stats',
     },
 
     // Users
     USERS: {
         BASE: '/users',
-        PROFILE: '/users/profile',
-        UPDATE_PROFILE: '/users/profile',
+        PROFILE: '/users/me',
+        UPDATE_PROFILE: '/users/me',
+        PROFILE_PHOTO: '/users/me/profile-photo',
         CHANGE_PASSWORD: '/users/change-password',
         PREFERENCES: '/users/preferences',
         NOTIFICATIONS: '/users/notifications',

@@ -67,37 +67,70 @@ export interface Rating {
 // ============================================
 
 export type UserRole = 'user' | 'vendor' | 'admin';
-export type UserStatus = 'active' | 'inactive' | 'pending' | 'suspended';
+export type UserStatus = 'pending' | 'active' | 'suspended' | 'disabled';
+
+export interface UserPreferences {
+    interests: string[];
+    travel_style: 'budget' | 'mid-range' | 'luxury' | null;
+    dietary_restrictions: string[];
+    languages: string[];
+    currency: string;
+}
+
+export interface NotificationPreferences {
+    email_bookings: boolean;
+    email_promotions: boolean;
+    email_newsletter: boolean;
+    email_experience_updates: boolean;
+    email_agent_messages: boolean;
+    push_bookings: boolean;
+    push_messages: boolean;
+    push_promotions: boolean;
+    push_experience_updates: boolean;
+    sms_bookings: boolean;
+    sms_verification: boolean;
+}
+
+export interface UserSubscription {
+    plan: 'free' | 'basic' | 'premium' | 'enterprise';
+    started_at: string;
+    expires_at: string | null;
+    is_active: boolean;
+    auto_renew: boolean;
+    features: string[];
+}
 
 export interface User {
     id: string;
     email: string;
-    firstName: string;
-    lastName: string;
-    fullName: string;
-    avatar?: string;
-    phone?: string;
-    role: UserRole;
+    first_name: string;
+    last_name: string;
+    full_name: string | null;
+    display_name: string | null;
+    phone: string | null;
+    bio: string | null;
+    profile_photo: string | null;
+    cover_photo: string | null;
+    date_of_birth: string | null;
+    gender: string | null;
     status: UserStatus;
-    emailVerified: boolean;
-    preferences?: UserPreferences;
-    createdAt: string;
-    updatedAt: string;
+    is_email_verified: boolean;
+    is_phone_verified: boolean;
+    is_active: boolean;
+    preferences: UserPreferences | null;
+    notification_preferences: NotificationPreferences;
+    subscription: UserSubscription | null;
+    followers_count: number;
+    following_count: number;
+    experiences_count: number;
+    reviews_count: number;
+    favorite_destinations: string[];
+    referral_code: string | null;
+    assigned_agent_id: string | null;
+    created_at: string;
+    updated_at: string;
+    last_login_at: string | null;
 }
-
-export interface UserPreferences {
-    language: string;
-    currency: string;
-    notifications: NotificationPreferences;
-    travelInterests: string[];
-    dietaryRestrictions?: string[];
-    accessibilityNeeds?: string[];
-}
-
-export interface NotificationPreferences {
-    email: boolean;
-    push: boolean;
-    sms: boolean;
     marketing: boolean;
     tripUpdates: boolean;
     priceAlerts: boolean;
