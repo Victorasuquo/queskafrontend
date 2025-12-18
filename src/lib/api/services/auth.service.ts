@@ -61,18 +61,25 @@ export const authService = {
      * Get Google OAuth URL for login
      */
     async getGoogleAuthUrl(): Promise<{ auth_url: string }> {
+        // Pass the frontend callback URL so backend redirects back to frontend after OAuth
+        const frontendCallbackUrl = `${window.location.origin}/auth/google/callback`;
+
         const response = await apiClient.get<{ auth_url: string }>(
             API_ENDPOINTS.AUTH.GOOGLE_LOGIN,
-            { skipAuth: true }
+            {
+                skipAuth: true,
+                params: {
+                    redirect_uri: frontendCallbackUrl
+                }
+            }
         );
         // Handle both wrapped and unwrapped responses
-        // Backend may return { auth_url: "..." } or { data: { auth_url: "..." } }
-        const data = response.data || response;
-        if (!data.auth_url && (data as unknown as { authorization_url?: string }).authorization_url) {
-            // Backend might use authorization_url instead of auth_url
-            return { auth_url: (data as unknown as { authorization_url: string }).authorization_url };
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const data: any = response.data || response;
+        if (data.authorization_url) {
+            return { auth_url: data.authorization_url };
         }
-        return data as { auth_url: string };
+        return { auth_url: data.auth_url };
     },
 
     /**
