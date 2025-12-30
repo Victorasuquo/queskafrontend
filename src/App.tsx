@@ -25,6 +25,7 @@ import AdminDashboard from "./pages/AdminDashboard";
 import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import GoogleCallback from "./pages/GoogleCallback";
+import Careers from "./pages/Careers";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -62,6 +63,7 @@ const App = () => (
                 <Route path="/flights" element={<Flights />} />
                 <Route path="/restaurants" element={<Restaurants />} />
                 <Route path="/stays" element={<Stays />} />
+                <Route path="/careers" element={<Careers />} />
                 <Route path="/admin" element={<AdminLogin />} />
                 <Route path="/admin/dashboard" element={<AdminDashboard />} />
                 {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

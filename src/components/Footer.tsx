@@ -113,9 +113,9 @@ const Footer = () => {
                 </Link>
               </li>
               <li>
-                <a href="mailto:careers@queska.com" className="text-secondary-foreground/70 hover:text-primary transition-colors">
+                <Link to="/careers" className="text-secondary-foreground/70 hover:text-primary transition-colors">
                   Careers
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
