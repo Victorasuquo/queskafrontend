@@ -26,6 +26,7 @@ import NotFound from "./pages/NotFound";
 import ScrollToTop from "./components/ScrollToTop";
 import GoogleCallback from "./pages/GoogleCallback";
 import Careers from "./pages/Careers";
+import { HelmetProvider } from "react-helmet-async";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -39,41 +40,43 @@ const queryClient = new QueryClient({
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
-    <ThemeProvider defaultTheme="system" storageKey="queska-ui-theme">
-      <AuthProvider>
-        <VendorProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <ScrollToTop />
-              <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/auth/google/callback" element={<GoogleCallback />} />
-                <Route path="/dashboard" element={<Dashboard />} />
-                <Route path="/vendor" element={<VendorPortal />} />
-                <Route path="/features" element={<Features />} />
-                <Route path="/how-it-works" element={<HowItWorks />} />
-                <Route path="/community" element={<CommunityPage />} />
-                <Route path="/about" element={<About />} />
-                <Route path="/events" element={<Events />} />
-                <Route path="/destinations" element={<Destinations />} />
-                <Route path="/activities" element={<Activities />} />
-                <Route path="/flights" element={<Flights />} />
-                <Route path="/restaurants" element={<Restaurants />} />
-                <Route path="/stays" element={<Stays />} />
-                <Route path="/careers" element={<Careers />} />
-                <Route path="/admin" element={<AdminLogin />} />
-                <Route path="/admin/dashboard" element={<AdminDashboard />} />
-                {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </VendorProvider>
-      </AuthProvider>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider defaultTheme="system" storageKey="queska-ui-theme">
+        <AuthProvider>
+          <VendorProvider>
+            <TooltipProvider>
+              <Toaster />
+              <Sonner />
+              <BrowserRouter>
+                <ScrollToTop />
+                <Routes>
+                  <Route path="/" element={<Index />} />
+                  <Route path="/login" element={<Login />} />
+                  <Route path="/auth/google/callback" element={<GoogleCallback />} />
+                  <Route path="/dashboard" element={<Dashboard />} />
+                  <Route path="/vendor" element={<VendorPortal />} />
+                  <Route path="/features" element={<Features />} />
+                  <Route path="/how-it-works" element={<HowItWorks />} />
+                  <Route path="/community" element={<CommunityPage />} />
+                  <Route path="/about" element={<About />} />
+                  <Route path="/events" element={<Events />} />
+                  <Route path="/destinations" element={<Destinations />} />
+                  <Route path="/activities" element={<Activities />} />
+                  <Route path="/flights" element={<Flights />} />
+                  <Route path="/restaurants" element={<Restaurants />} />
+                  <Route path="/stays" element={<Stays />} />
+                  <Route path="/careers" element={<Careers />} />
+                  <Route path="/admin" element={<AdminLogin />} />
+                  <Route path="/admin/dashboard" element={<AdminDashboard />} />
+                  {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+                  <Route path="*" element={<NotFound />} />
+                </Routes>
+              </BrowserRouter>
+            </TooltipProvider>
+          </VendorProvider>
+        </AuthProvider>
+      </ThemeProvider>
+    </HelmetProvider>
   </QueryClientProvider>
 );
 
